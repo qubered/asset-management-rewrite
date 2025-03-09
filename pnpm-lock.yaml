@@ -104,6 +104,9 @@ importers:
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@4.0.11)
+      typecheck:
+        specifier: ^0.1.2
+        version: 0.1.2
       zod:
         specifier: ^3.24.2
         version: 3.24.2
@@ -2793,6 +2796,9 @@ packages:
   type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
     engines: {node: '>= 0.8.0'}
+
+  typecheck@0.1.2:
+    resolution: {integrity: sha512-noA7T++dtHFemmk++XgotLp47kcu8ezbvN3hUUljZvntPGDWi9Ci0c24x6onS92PxOUNZFYChH8KPXRaoCcjgQ==}
 
   typed-array-buffer@1.0.3:
     resolution: {integrity: sha512-nAYYwfY3qnzX30IkA6AQZjVbtK6duGontcQm1WSG1MD94YLqK0515GNApXkoxKOWMusVssAHWLh9SeaoefYFGw==}
@@ -5713,6 +5719,8 @@ snapshots:
   type-check@0.4.0:
     dependencies:
       prelude-ls: 1.2.1
+
+  typecheck@0.1.2: {}
 
   typed-array-buffer@1.0.3:
     dependencies:
