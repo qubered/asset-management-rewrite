@@ -1,5 +1,5 @@
 "use client";
-import { authClient } from "@/lib/auth-client" 
+import { authClient } from "@/lib/auth-client"
 import { Button } from "@/components/ui/button"
 
 async function handleSignOut() {
@@ -7,12 +7,7 @@ async function handleSignOut() {
 }
 
 export default function AuthPage() {
-    const { 
-        data: session, 
-        isPending, //loading state 
-        error, //error object 
-        refetch //refetch the session
-    } = authClient.useSession() 
+    const { data: session } = authClient.useSession()
     return (
         <>
             <h1 className="text-2xl font-bold">{session?.user.name}</h1>

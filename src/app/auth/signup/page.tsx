@@ -41,12 +41,12 @@ export default function SignUpForm() {
   const form = useForm<z.infer<typeof formScheme>>({
     resolver: zodResolver(formScheme),
     defaultValues: {
-        fullName: "",
-        email: "",
-        password: ""
+      fullName: "",
+      email: "",
+      password: ""
     }
   });
-  const [ isLoading, setIsLoading ] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [alert, setAlert] = useState({
     show: false,
     title: "",
@@ -57,34 +57,34 @@ export default function SignUpForm() {
   async function onSubmit(values: z.infer<typeof formScheme>) {
     setAlert({ show: false, title: "", description: "", variant: "default" })
     const { data, error } = await authClient.signUp.email({
-        email: values.email,
-        password: values.password,
-        name: values.fullName,
-        callbackURL: "/main"
+      email: values.email,
+      password: values.password,
+      name: values.fullName,
+      callbackURL: "/main"
 
     }, {
-        onRequest: (ctx) => {
-            setIsLoading(true)
-        },
-        onSuccess: (ctx) => {
-            setIsLoading(false)
-            form.reset();
-            setAlert({
-              show: true,
-              title: "Sign Up Successful",
-              description: "Your account has been created successfully. Please check your email to verify your account.",
-              variant: "success",
-            })
-        },
-        onError: (ctx) => {
-            setIsLoading(false)
-            setAlert({
-              show: true,
-              title: "Sign Up Failed",
-              description: ctx.error.message || "An error occurred during sign up. Please try again.",
-              variant: "error",
-            })
-        }
+      onRequest: (ctx) => {
+        setIsLoading(true)
+      },
+      onSuccess: (ctx) => {
+        setIsLoading(false)
+        form.reset();
+        setAlert({
+          show: true,
+          title: "Sign Up Successful",
+          description: "Your account has been created successfully. Please check your email to verify your account.",
+          variant: "success",
+        })
+      },
+      onError: (ctx) => {
+        setIsLoading(false)
+        setAlert({
+          show: true,
+          title: "Sign Up Failed",
+          description: ctx.error.message || "An error occurred during sign up. Please try again.",
+          variant: "error",
+        })
+      }
     });
   }
 
@@ -100,7 +100,7 @@ export default function SignUpForm() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Form {... form}>
+          <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-8">
               <FormField
                 control={form.control}
@@ -109,12 +109,12 @@ export default function SignUpForm() {
                   <FormItem>
                     <FormLabel>Full Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="John Doe" {... field} />
+                      <Input placeholder="John Doe" {...field} />
                     </FormControl>
-                    <FormDescription>This is your account's display name</FormDescription>
+                    <FormDescription>This is your account&apos;s display name</FormDescription>
                   </FormItem>
                 )}
-                />
+              />
               <FormField
                 control={form.control}
                 name="email"
@@ -122,12 +122,12 @@ export default function SignUpForm() {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input placeholder="john@doe.com" {... field} />
+                      <Input placeholder="john@doe.com" {...field} />
                     </FormControl>
                     <FormDescription>You will need to verify this email to login.</FormDescription>
                   </FormItem>
                 )}
-                />
+              />
               <FormField
                 control={form.control}
                 name="password"
@@ -135,19 +135,19 @@ export default function SignUpForm() {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input placeholder="john@doe.com" type="password" {... field} />
+                      <Input placeholder="john@doe.com" type="password" {...field} />
                     </FormControl>
                     <FormDescription>Minimum 8 Characters.</FormDescription>
                   </FormItem>
                 )}
-                />
-                <Button type="submit" disabled={isLoading}>
-                  <div className="flex gap-4 items-center">
-                    {isLoading ? (<MoonLoader size={20}/>) : (null)}
-                    Sign Up
-                  </div>
+              />
+              <Button type="submit" disabled={isLoading}>
+                <div className="flex gap-4 items-center">
+                  {isLoading ? (<MoonLoader size={20} />) : (null)}
+                  Sign Up
+                </div>
 
-                </Button>
+              </Button>
             </form>
             <div className="mt-4 text-center text-sm">
               Already have an account?{" "}
