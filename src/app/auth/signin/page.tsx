@@ -40,12 +40,12 @@ export default function SignInForm() {
   const form = useForm<z.infer<typeof formScheme>>({
     resolver: zodResolver(formScheme),
     defaultValues: {
-        email: "",
-        password: "",
-        rememberMe: false
+      email: "",
+      password: "",
+      rememberMe: false
     }
   });
-  const [ isLoading, setIsLoading ] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [alert, setAlert] = useState({
     show: false,
     title: "",
@@ -56,27 +56,27 @@ export default function SignInForm() {
   async function onSubmit(values: z.infer<typeof formScheme>) {
     setAlert({ show: false, title: "", description: "", variant: "default" })
     const { data, error } = await authClient.signIn.email({
-        email: values.email,
-        password: values.password,
-        callbackURL: "/main"
+      email: values.email,
+      password: values.password,
+      callbackURL: "/main"
     }, {
-        onRequest: (ctx) => {
-            setIsLoading(true)
-        },
-        onSuccess: (ctx) => {
-            setIsLoading(false)
-            form.reset();
-            
-        },
-        onError: (ctx) => {
-            setIsLoading(false)
-            setAlert({
-              show: true,
-              title: "Sign In Failed",
-              description: ctx.error.message || "An error occurred during sign up. Please try again.",
-              variant: "error",
-            })
-        }
+      onRequest: (ctx) => {
+        setIsLoading(true)
+      },
+      onSuccess: (ctx) => {
+        setIsLoading(false)
+        form.reset();
+
+      },
+      onError: (ctx) => {
+        setIsLoading(false)
+        setAlert({
+          show: true,
+          title: "Sign In Failed",
+          description: ctx.error.message || "An error occurred during sign up. Please try again.",
+          variant: "error",
+        })
+      }
     });
   }
 
@@ -89,7 +89,7 @@ export default function SignInForm() {
           <CardTitle>Sign In to your Account</CardTitle>
         </CardHeader>
         <CardContent>
-          <Form {... form}>
+          <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-8">
               <FormField
                 control={form.control}
@@ -98,11 +98,11 @@ export default function SignInForm() {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input placeholder="john@doe.com" {... field} />
+                      <Input placeholder="john@doe.com" {...field} />
                     </FormControl>
                   </FormItem>
                 )}
-                />
+              />
               <FormField
                 control={form.control}
                 name="password"
@@ -110,30 +110,30 @@ export default function SignInForm() {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input placeholder="john@doe.com" type="password" {... field} />
+                      <Input placeholder="john@doe.com" type="password" {...field} />
                     </FormControl>
                   </FormItem>
                 )}
-                />
+              />
               <FormField
                 control={form.control}
                 name="rememberMe"
                 render={({ field }) => (
                   <FormItem className="flex items-center">
                     <FormControl>
-                        <Checkbox />
+                      <Checkbox />
                     </FormControl>
                     <FormLabel>Remember Me?</FormLabel>
                   </FormItem>
                 )}
-                />
-                <Button type="submit" disabled={isLoading}>
-                  <div className="flex gap-4 items-center">
-                    {isLoading ? (<MoonLoader size={20}/>) : (null)}
-                    Sign In
-                  </div>
+              />
+              <Button type="submit" disabled={isLoading}>
+                <div className="flex gap-4 items-center">
+                  {isLoading ? (<MoonLoader size={20} />) : (null)}
+                  Sign In
+                </div>
 
-                </Button>
+              </Button>
             </form>
             <div className="mt-4 text-center text-sm">
               Don't have an account?{" "}
