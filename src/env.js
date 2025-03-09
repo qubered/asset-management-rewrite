@@ -20,8 +20,6 @@ export const env = createEnv({
    * 💡 You'll get type errors if these are not prefixed with NEXT_PUBLIC_.
    */
   client: {
-    NEXT_PUBLIC_TEST_USERNAME: z.string(),
-    NEXT_PUBLIC_TEST_PASSWORD: z.string(),
     // NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1),
   },
   /*
@@ -35,8 +33,6 @@ export const env = createEnv({
     BETTER_AUTH_URL: process.env.BETTER_AUTH_URL,
     DATABASE_URL: process.env.DATABASE_URL,
     RESEND_API_KEY: process.env.RESEND_API_KEY,
-    NEXT_PUBLIC_TEST_USERNAME: process.env.NEXT_PUBLIC_TEST_USERNAME,
-    NEXT_PUBLIC_TEST_PASSWORD: process.env.NEXT_PUBLIC_TEST_PASSWORD,
 
   },
 });
