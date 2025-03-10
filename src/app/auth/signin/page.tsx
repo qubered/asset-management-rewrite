@@ -24,6 +24,7 @@ import { authClient } from "@/lib/auth-client";
 import { useState } from "react"
 import { MoonLoader } from "react-spinners"
 import { AlertBox } from "@/components/alert-helper"
+import Link from "next/link";
 
 const formScheme = z.object({
   email: z.string().email(),
@@ -108,7 +109,10 @@ export default function SignInForm() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <div className="flex gap-4 justify-between items-center">
+                      <FormLabel>Password</FormLabel>
+                      <Link href="/auth/forgotpassword" className="text-xs underline underline-offset-4 mr-2">Forgot Password?</Link>
+                    </div>
                     <FormControl>
                       <Input placeholder="john@doe.com" type="password" {...field} />
                     </FormControl>

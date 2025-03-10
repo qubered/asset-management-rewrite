@@ -10,12 +10,20 @@ export const auth = betterAuth({
     database: new Pool({
         connectionString: env.DATABASE_URL,
     }),
-    plugins: [ 
-        organization() 
+    plugins: [
+        organization()
     ],
-    emailAndPassword: {  
+    emailAndPassword: {
         enabled: true,
-        autoSignIn: false
+        autoSignIn: false,
+        sendResetPassword: async ({ user, url, token }, request) => {
+            await sendEmail(
+                'auth@web.qubered.com',
+                user.email,
+                "Reset your password",
+                `Click the link to reset your password: ${url}`,
+            );
+        },
     },
     emailVerification: {
         sendOnSignUp: true,
@@ -27,6 +35,7 @@ export const auth = betterAuth({
                 'Verify your email address',
                 `Click the link to verify your email: ${url}`
             )
-        }
+        },
+
     }
 });
