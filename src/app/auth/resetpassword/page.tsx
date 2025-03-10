@@ -32,6 +32,7 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { Suspense } from "react"
 
 
 const formScheme = z.object({
@@ -39,7 +40,7 @@ const formScheme = z.object({
 })
 
 
-export default function ResetPasswordForm() {
+function ResetPasswordContent() {
     const searchParams = useSearchParams();
     const [token, setToken] = useState<string | null>(null);
     const form = useForm<z.infer<typeof formScheme>>({
@@ -148,5 +149,17 @@ export default function ResetPasswordForm() {
                 </CardContent>
             </Card>
         </div>
+    )
+}
+
+export default function ResetPasswordPage() {
+    return (
+        <Suspense fallback={
+            <div className="flex justify-center">
+                <MoonLoader />
+            </div>
+        }>
+            <ResetPasswordContent />
+        </Suspense>
     )
 }
