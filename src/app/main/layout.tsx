@@ -40,19 +40,7 @@ export default async function MainLayout({
                 <header className="bg-background sticky top-0 flex h-16 shrink-0 items-center gap-2 border-b px-4">
                     <SidebarTrigger className="-ml-1" />
                     <Separator orientation="vertical" className="mr-2 h-4" />
-                    <Breadcrumb>
-                        <BreadcrumbList>
-                            <BreadcrumbItem className="hidden md:block">
-                                <BreadcrumbLink href="#">
-                                    Building Your Application
-                                </BreadcrumbLink>
-                            </BreadcrumbItem>
-                            <BreadcrumbSeparator className="hidden md:block" />
-                            <BreadcrumbItem>
-                                <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                            </BreadcrumbItem>
-                        </BreadcrumbList>
-                    </Breadcrumb>
+                    <p className="font-semibold">Something interesting will go here soon..</p><p> Or I will learn how to use breadcrumbs</p>
                 </header>
                 <div className="flex flex-1 flex-col gap-4 p-4">
                     <Suspense fallback={<div>Loading...</div>}>
