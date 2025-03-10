@@ -66,7 +66,7 @@ export function NavUser({
   return (
     <SidebarMenu>
       <SidebarMenuItem>
-        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <Dialog open={dialogOpen} onOpenChange={setDialogOpen} modal={true}>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <SidebarMenuButton
