@@ -2,6 +2,7 @@
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import React, { Suspense } from 'react';
 
 import {
     Breadcrumb,
@@ -10,14 +11,14 @@ import {
     BreadcrumbList,
     BreadcrumbPage,
     BreadcrumbSeparator,
-  } from "@/components/ui/breadcrumb"
-  import { Separator } from "@/components/ui/separator"
-  import {
+} from "@/components/ui/breadcrumb"
+import { Separator } from "@/components/ui/separator"
+import {
     SidebarInset,
     SidebarProvider,
     SidebarTrigger,
-  } from "@/components/ui/sidebar"
-  import { AppSidebar } from "@/components/navbar/app-sidebar"
+} from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/navbar/app-sidebar"
 
 export default async function MainLayout({
     children,
@@ -25,7 +26,7 @@ export default async function MainLayout({
     children: React.ReactNode;
 }) {
     const session = await auth.api.getSession({
-        headers: await headers() 
+        headers: await headers()
     });
 
     if (!session) {
@@ -34,29 +35,31 @@ export default async function MainLayout({
 
     return (
         <SidebarProvider>
-        <AppSidebar />
-        <SidebarInset>
-            <header className="bg-background sticky top-0 flex h-16 shrink-0 items-center gap-2 border-b px-4">
-                <SidebarTrigger className="-ml-1" />
-                <Separator orientation="vertical" className="mr-2 h-4" />
-                <Breadcrumb>
-                    <BreadcrumbList>
-                        <BreadcrumbItem className="hidden md:block">
-                            <BreadcrumbLink href="#">
-                                Building Your Application
-                            </BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator className="hidden md:block" />
-                        <BreadcrumbItem>
-                            <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                        </BreadcrumbItem>
-                    </BreadcrumbList>
-                </Breadcrumb>
-            </header>
-            <div className="flex flex-1 flex-col gap-4 p-4">
-                {children}
-            </div>
-        </SidebarInset>
-    </SidebarProvider>
+            <AppSidebar />
+            <SidebarInset>
+                <header className="bg-background sticky top-0 flex h-16 shrink-0 items-center gap-2 border-b px-4">
+                    <SidebarTrigger className="-ml-1" />
+                    <Separator orientation="vertical" className="mr-2 h-4" />
+                    <Breadcrumb>
+                        <BreadcrumbList>
+                            <BreadcrumbItem className="hidden md:block">
+                                <BreadcrumbLink href="#">
+                                    Building Your Application
+                                </BreadcrumbLink>
+                            </BreadcrumbItem>
+                            <BreadcrumbSeparator className="hidden md:block" />
+                            <BreadcrumbItem>
+                                <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                            </BreadcrumbItem>
+                        </BreadcrumbList>
+                    </Breadcrumb>
+                </header>
+                <div className="flex flex-1 flex-col gap-4 p-4">
+                    <Suspense fallback={<div>Loading...</div>}>
+                        {children}
+                    </Suspense>
+                </div>
+            </SidebarInset>
+        </SidebarProvider>
     );
 }
