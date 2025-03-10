@@ -66,6 +66,12 @@ export default function SignInForm() {
       },
       onSuccess: (ctx) => {
         setIsLoading(false)
+        setAlert({
+          show: true,
+          title: "Success",
+          description: "Welcome Back!",
+          variant: "success",
+        })
         form.reset();
 
       },
@@ -87,7 +93,7 @@ export default function SignInForm() {
       <Card>
 
         <CardHeader>
-          <CardTitle>Sign In to your Account</CardTitle>
+          <CardTitle className="mb-4">Sign In to your Account</CardTitle>
         </CardHeader>
         <CardContent>
           <Form {...form}>

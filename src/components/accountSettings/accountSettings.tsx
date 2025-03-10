@@ -19,6 +19,7 @@ import { toast } from "sonner"
 import { UploadButton, UploadDropzone } from "@/lib/uploadthing"
 import { Camera } from "lucide-react"
 import { useState } from "react"
+import { MoonLoader } from "react-spinners"
 
 const formSchema = z.object({
     fullName: z.string().min(2, "Minimum 2 Characters").max(30, "Maximum 30 Characters"),
@@ -27,6 +28,7 @@ const formSchema = z.object({
 })
 
 export default function AccountSettings({ onClose }: { onClose?: () => void }) {
+    const [userImageLoading, setUserImageLoading] = useState(false)
     const { data: session } = authClient.useSession()
     const [userImage, setUserImage] = useState(session?.user.image || "")
     const form = useForm<z.infer<typeof formSchema>>({
@@ -59,30 +61,41 @@ export default function AccountSettings({ onClose }: { onClose?: () => void }) {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                 <div className="flex gap-4 items-center">
                     <div className="relative group">
-                        <Avatar className="h-16 w-16 mb-4">
+                        <Avatar className="h-16 w-16">
                             <AvatarImage src={userImage} alt={`${session?.user.name} Profile Image`} />
                             <AvatarFallback>JN</AvatarFallback>
                         </Avatar>
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/60 rounded-full opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
-                            <UploadButton
-                                endpoint="imageUploader"
-                                onClientUploadComplete={(res) => {
-                                    console.log("Files: ", res);
-                                    setUserImage(res[0].ufsUrl);
-                                }}
-                                onUploadError={(error: Error) => {
-                                    toast.error(`ERROR! ${error.message}`);
-                                }}
-                                content={{
-                                    button: () => (
-                                        <div className="flex flex-col items-center text-white">
-                                            <Camera className="h-6 w-6" />
-                                        </div>
-                                    ),
-                                    allowedContent: () => ""
-                                }}
-                            />
-                        </div>
+                        {userImageLoading ? (
+                            <div className="absolute inset-0 flex items-center justify-center bg-black/60 rounded-full">
+                                <MoonLoader size={20} color="white" />
+                            </div>
+                        ) : (
+                            <div className="absolute inset-0 flex items-center justify-center bg-black/60 rounded-full opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                                <UploadButton
+                                    endpoint="imageUploader"
+                                    onUploadBegin={() => {
+                                        setUserImageLoading(true);
+                                    }}
+                                    onClientUploadComplete={(res) => {
+                                        console.log("Files: ", res);
+                                        setUserImage(res[0].ufsUrl);
+                                        setUserImageLoading(false);
+                                    }}
+                                    onUploadError={(error: Error) => {
+                                        toast.error(`ERROR! ${error.message}`);
+                                        setUserImageLoading(false);
+                                    }}
+                                    content={{
+                                        button: () => (
+                                            <div className="flex flex-col items-center text-white">
+                                                <Camera className="h-6 w-6" />
+                                            </div>
+                                        ),
+                                        allowedContent: () => ""
+                                    }}
+                                />
+                            </div>
+                        )}
                     </div>
                     <FormField
                         control={form.control}

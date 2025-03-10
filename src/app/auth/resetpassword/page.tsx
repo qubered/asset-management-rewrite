@@ -26,6 +26,13 @@ import { MoonLoader } from "react-spinners"
 import { AlertBox } from "@/components/alert-helper"
 import { useSearchParams } from "next/navigation"
 import Link from "next/link";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "@/components/ui/tooltip"
+
 
 const formScheme = z.object({
     password: z.string().min(8),
@@ -67,8 +74,8 @@ export default function ResetPasswordForm() {
                 form.reset();
                 setAlert({
                     show: true,
-                    title: "Password Reset Sent",
-                    description: "Check your email for a link to reset your password",
+                    title: "Password Reset Success",
+                    description: "Please login using your new password",
                     variant: "success",
                 })
 
@@ -92,7 +99,7 @@ export default function ResetPasswordForm() {
                 <AlertBox
                     show={true}
                     title="Error"
-                    description="No token found in URL. Did you follow the link from the email?"
+                    description="Something is not quite right... Did you follow the exact link from the email?"
                     variant="error"
                 />
                 <Link href="/auth/signin"><Button>Return to Sign In</Button></Link>
@@ -118,7 +125,7 @@ export default function ResetPasswordForm() {
                                     <FormItem>
                                         <FormLabel>New Password</FormLabel>
                                         <FormControl>
-                                            <Input placeholder="john@doe.com" {...field} />
+                                            <Input placeholder="Minimum 8 Characters" {...field} />
                                         </FormControl>
                                     </FormItem>
                                 )}
