@@ -9,6 +9,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
+* {
+  @apply transition-colors duration-150;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
