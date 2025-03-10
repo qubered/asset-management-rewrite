@@ -23,6 +23,7 @@ import {
 import { NavUser } from "./nav-user"
 import { authClient } from "@/lib/auth-client";
 import { usePathname } from 'next/navigation'
+import Link from "next/link";
 
 
 // This is sample data.
@@ -77,7 +78,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 className="group/label text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground text-sm"
               >
                 <CollapsibleTrigger>
-                  {item.title}{" "}
+                  <span className="font-semibold">{item.title}{" "}</span>
                   <ChevronRight className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-90" />
                 </CollapsibleTrigger>
               </SidebarGroupLabel>
@@ -87,7 +88,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     {item.items.map((item) => (
                       <SidebarMenuItem key={item.title}>
                         <SidebarMenuButton asChild isActive={item.url === currentPath}>
-                          <a href={item.url} className="ml-2">{item.title}</a>
+                          <Link href={item.url} className="ml-2">{item.title}</Link>
                         </SidebarMenuButton>
                       </SidebarMenuItem>
                     ))}
