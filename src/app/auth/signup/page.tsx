@@ -16,7 +16,7 @@ import {
   FormItem,
   FormLabel,
 } from "@/components/ui/form"
-
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Input } from "@/components/ui/input"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -25,6 +25,9 @@ import { authClient } from "@/lib/auth-client";
 import { useState } from "react"
 import { MoonLoader } from "react-spinners"
 import { AlertBox } from "@/components/alert-helper"
+import { UploadButton } from "@/lib/uploadthing"
+import { toast } from "sonner";
+import { Camera } from "lucide-react";
 
 const formScheme = z.object({
   fullName: z.string(),
@@ -38,6 +41,7 @@ const formScheme = z.object({
 
 
 export default function SignUpForm() {
+
   const form = useForm<z.infer<typeof formScheme>>({
     resolver: zodResolver(formScheme),
     defaultValues: {
@@ -46,6 +50,8 @@ export default function SignUpForm() {
       password: ""
     }
   });
+  const [userImage, setUserImage] = useState("")
+  const [userName, setUserName] = useState("H I")
   const [isLoading, setIsLoading] = useState(false);
   const [alert, setAlert] = useState({
     show: false,
@@ -60,6 +66,7 @@ export default function SignUpForm() {
       email: values.email,
       password: values.password,
       name: values.fullName,
+      image: userImage,
       callbackURL: "/main"
 
     }, {
@@ -102,6 +109,38 @@ export default function SignUpForm() {
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-8">
+              <div className="flex gap-4 items-center">
+                <div className="relative group w-16 h-16">
+                  <Avatar className="h-full w-full">
+                    <AvatarImage src={userImage} alt={`New User Profile Image`} />
+                    <AvatarFallback>{(userName)?.split(" ").map(([firstLetter]) => firstLetter?.toUpperCase()).join("")}</AvatarFallback>
+                  </Avatar>
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/60 rounded-full opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+                    <UploadButton
+                      endpoint="imageUploader"
+                      onClientUploadComplete={(res) => {
+                        console.log("Files: ", res);
+                        setUserImage(res[0].ufsUrl);
+                      }}
+                      onUploadError={(error: Error) => {
+                        toast.error(`ERROR! ${error.message}`);
+                      }}
+                      content={{
+                        button: () => (
+                          <div className="flex flex-col items-center text-white">
+                            <Camera className="h-6 w-6" />
+                          </div>
+                        ),
+                        allowedContent: () => ""
+                      }}
+                    />
+                  </div>
+                </div>
+                <div>
+                  Profile Image
+                  <p className="text-sm text-muted-foreground">Choose your profile image, max 4mb</p>
+                </div>
+              </div>
               <FormField
                 control={form.control}
                 name="fullName"
@@ -109,7 +148,14 @@ export default function SignUpForm() {
                   <FormItem>
                     <FormLabel>Full Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="John Doe" {...field} />
+                      <Input
+                        placeholder="John Doe"
+                        {...field}
+                        onChange={(e) => {
+                          field.onChange(e);
+                          setUserName(e.target.value);
+                        }}
+                      />
                     </FormControl>
                     <FormDescription>This is your account&apos;s display name</FormDescription>
                   </FormItem>
