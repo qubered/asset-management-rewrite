@@ -52,7 +52,7 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { data: session } = authClient.useSession()
-  const userData: { fullName?: string, email?: string, avatar?: string } = { fullName: session?.user.name, email: session?.user.email }
+  const userData: { fullName?: string, email?: string, avatar?: string } = { fullName: session?.user.name, email: session?.user.email, avatar: session?.user.image || "" }
   const currentPath = usePathname()
   return (
     <Sidebar {...props}>
