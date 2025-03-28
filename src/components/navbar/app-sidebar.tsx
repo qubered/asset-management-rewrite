@@ -31,21 +31,47 @@ const data = {
   versions: ["1.0.1", "1.1.0-alpha", "2.0.0-beta1"],
   navMain: [
     {
-      title: "Inventory",
+      title: "Inventory Management",
       url: "",
       items: [
         {
           title: "Assets",
-          url: "/main/assets",
+          url: "/main/inventory/assets",
         },
         {
           title: "Models",
-          url: "/main/models",
+          url: "/main/inventory/models",
         },
         {
-          title: "Locations",
-          url: "/main/locations"
+          title: "Manufacturers",
+          url: "/main/inventory/manufacturers",
+        },
+        {
+          title: "Kits",
+          url: "/main/inventory/kits",
+        },
+        {
+          title: "Cables",
+          url: "/main/inventory/cables",
+        },
+        {
+          title: "Storage Locations",
+          url: "/main/inventory/locations"
         }
+      ],
+    },
+    {
+      title: "Project Management",
+      url: "",
+      items: [
+        {
+          title: "Projects",
+          url: "/main/projects/main",
+        },
+        {
+          title: "Clients",
+          url: "/main/projects/clients",
+        },
       ],
     },
   ],
